@@ -14,6 +14,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/button_display_clock"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="openClockView"/>
 
 </android.support.constraint.ConstraintLayout>

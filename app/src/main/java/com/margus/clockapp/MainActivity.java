@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.margus.clockapp.visuals.ClockView;
+
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,11 +15,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.buttonDisplayClock) {
-            Intent intentToOpenClockActivity = new Intent(MainActivity.this, ClockActivity.class);
-            startActivity(intentToOpenClockActivity);
-        }
+    public void openClockView(View view) {
+        Intent intentToOpenClockView = new Intent(MainActivity.this, ClockActivity.class);
+        startActivity(intentToOpenClockView);
     }
 }
