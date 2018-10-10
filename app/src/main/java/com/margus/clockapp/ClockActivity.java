@@ -15,5 +15,6 @@ public class ClockActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clock);
 
         mClockView = findViewById(R.id.clock_view);
+        mClockView.setColor(getString(R.string.pref_color_red_value));
     }
 }
