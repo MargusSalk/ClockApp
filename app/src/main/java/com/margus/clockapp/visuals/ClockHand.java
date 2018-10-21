@@ -7,14 +7,14 @@ import android.support.annotation.ColorInt;
 abstract class ClockHand {
 
     // Parent view center points
-    private static float sViewCenterX, sViewCenterY;
+    public static float sViewCenterX, sViewCenterY;
     // Size of the hand
     private final float mMultiplier;
     // Variable for determining position
     private float mShapeRadiusFromCenter;
 
-    private static float mWidth = 10;
-    private static float mHeight = 50;
+    private static float mWidth = 50;
+    private static float mHeight = 400;
 
     // Paint for drawing
     private final Paint mPaint;

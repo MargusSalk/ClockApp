@@ -3,6 +3,8 @@ package com.margus.clockapp.visuals;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
@@ -29,7 +31,14 @@ public class ClockView extends View {
         mSmallHand = new ClockHand(SMALL_MULTIPLIER) {
             @Override
             protected void drawThisShape(float width, float height, double currentAngle, Canvas canvas, Paint paint) {
-                canvas.drawRect(40, 40, 90, 90, paint);
+                float left = ClockHand.sViewCenterX - width / 2;
+                float top = ClockHand.sViewCenterY - height;
+                RectF rectF = new RectF(left, top, left + width, top + height);
+                canvas.save();
+                canvas.rotate(90, ClockHand.sViewCenterX, ClockHand.sViewCenterY);
+                canvas.drawRect(rectF, paint);
+                canvas.restore();
+//                canvas.drawRect(40, 40, 90, 90, paint);
             }
         };
     }
