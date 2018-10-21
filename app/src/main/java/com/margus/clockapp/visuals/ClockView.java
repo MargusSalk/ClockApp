@@ -22,7 +22,7 @@ public class ClockView extends View {
     private int backgroundColor;
 
     private final ClockHand mSmallHand;
-//    private final ClockHand mBigHand;
+    private final ClockHand mBigHand;
 //    public ClockView(Context context) { super(context); }
 
     public ClockView(Context context, AttributeSet attrs) {
@@ -30,15 +30,22 @@ public class ClockView extends View {
 
         mSmallHand = new ClockHand(SMALL_MULTIPLIER) {
             @Override
-            protected void drawThisShape(float width, float height, double currentAngle, Canvas canvas, Paint paint) {
-                float left = ClockHand.sViewCenterX - width / 2;
-                float top = ClockHand.sViewCenterY - height;
-                RectF rectF = new RectF(left, top, left + width, top + height);
+            protected void drawThisShape(float left, float top, float right, float bottom,
+                                         float currentAngle, Canvas canvas, Paint paint) {
                 canvas.save();
                 canvas.rotate(90, ClockHand.sViewCenterX, ClockHand.sViewCenterY);
-                canvas.drawRect(rectF, paint);
+                canvas.drawRect(left, top, right, bottom, paint);
                 canvas.restore();
-//                canvas.drawRect(40, 40, 90, 90, paint);
+            }
+        };
+        mBigHand = new ClockHand(BIG_MULTIPLIER) {
+            @Override
+            protected void drawThisShape(float left, float top, float right, float bottom,
+                                         float currentAngle, Canvas canvas, Paint paint) {
+                canvas.save();
+                canvas.rotate(currentAngle, ClockHand.sViewCenterX, ClockHand.sViewCenterY);
+                canvas.drawRect(left, top, right, bottom, paint);
+                canvas.restore();
             }
         };
     }
@@ -53,7 +60,6 @@ public class ClockView extends View {
 
         float viewCenterX = getWidth() / 2.f;
         float viewCenterY = getHeight() / 2.f;
-        float shortSide = viewCenterX < viewCenterY ? viewCenterX : viewCenterY;
         ClockHand.setViewCenterX(viewCenterX);
         ClockHand.setViewCenterY(viewCenterY);
     }
@@ -80,6 +86,7 @@ public class ClockView extends View {
         }
 
         mSmallHand.setColor(shapeColor);
+        mBigHand.setColor(shapeColor);
     }
 
     @Override
@@ -91,7 +98,8 @@ public class ClockView extends View {
 
         // Draw the background
         canvas.drawColor(backgroundColor);
-        mSmallHand.draw(canvas, 5.5);
+        mSmallHand.draw(canvas, 90f);
+        mBigHand.draw(canvas, 135f);
 
 
         // Invalidate the view to immediately redraw

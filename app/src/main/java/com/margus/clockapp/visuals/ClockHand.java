@@ -2,6 +2,7 @@ package com.margus.clockapp.visuals;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.annotation.ColorInt;
 
 abstract class ClockHand {
@@ -13,8 +14,8 @@ abstract class ClockHand {
     // Variable for determining position
     private float mShapeRadiusFromCenter;
 
-    private static float mWidth = 50;
-    private static float mHeight = 400;
+    private static float mWidth = 30;
+    private static float mHeight = 300;
 
     // Paint for drawing
     private final Paint mPaint;
@@ -42,23 +43,27 @@ abstract class ClockHand {
      * @param canvas         The canvas to draw on
      * @param currentAngle   The current angle around the center to draw the hand
      */
-    void draw(Canvas canvas, double currentAngle) {
+    void draw(Canvas canvas, float currentAngle) {
         float width = mWidth * mMultiplier;
         float height = mHeight * mMultiplier;
+        float left = ClockHand.sViewCenterX - width / 2;
+        float top = ClockHand.sViewCenterY - height;
         // Call the abstract drawThisShape method, this must be defined for each shape.
-        drawThisShape(width, height, currentAngle, canvas, mPaint);
+        drawThisShape(left, top, left + width, top + height, currentAngle, canvas, mPaint);
     }
 
     /**
      * Determines how to draw the particular shape
      *
-     * @param width        Width of the hand
-     * @param height       Height of the hand
+     * @param left         Left coordinate
+     * @param top          Top coordinate
+     * @param right        Right coordinate
+     * @param bottom       Bottom coordinate
      * @param currentAngle Angle of the hand
      * @param canvas       The canvas to draw on
      * @param paint        The paint to draw with
      */
-    protected abstract void drawThisShape(float width, float height, double currentAngle, Canvas canvas, Paint paint);
+    protected abstract void drawThisShape(float left, float top, float right, float bottom, float currentAngle, Canvas canvas, Paint paint);
 
     /**
      * Calculates the center y location
