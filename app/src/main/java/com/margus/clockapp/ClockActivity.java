@@ -17,12 +17,9 @@ public class ClockActivity extends AppCompatActivity {
 
         mClockView = findViewById(R.id.clock_view);
         mClockView.setColor(getString(R.string.pref_color_red_value));
+        mTicker = new Ticker(15, mClockView);
+        mClockView.setTicker(mTicker);
 
-        setupTicker(mClockView);
-    }
-
-    private void setupTicker(ClockView clockView) {
-        mTicker = new Ticker(30, clockView);
         mTicker.start();
     }
 }

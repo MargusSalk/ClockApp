@@ -12,22 +12,27 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.margus.clockapp.R;
+import com.margus.clockapp.Ticker;
 
 public class ClockView extends View {
 
     private final float SMALL_MULTIPLIER = 1;
     private final float BIG_MULTIPLIER = 2;
+    // Refresh speed = how many seconds for moving 1 second worth on clock (6 degrees)
+    private final int SMALL_REFRESH_SPEED = 60;
+    private final int BIG_REFRESH_SPEED = 1;
 
     @ColorInt
     private int backgroundColor;
 
     private final ClockHand mSmallHand;
     private final ClockHand mBigHand;
+    private Ticker mTicker;
 
     public ClockView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mSmallHand = new ClockHand(SMALL_MULTIPLIER) {
+        mSmallHand = new ClockHand(SMALL_MULTIPLIER, SMALL_REFRESH_SPEED) {
             @Override
             protected void drawThisShape(float left, float top, float right, float bottom,
                                          float currentAngle, Canvas canvas, Paint paint) {
@@ -37,7 +42,7 @@ public class ClockView extends View {
                 canvas.restore();
             }
         };
-        mBigHand = new ClockHand(BIG_MULTIPLIER) {
+        mBigHand = new ClockHand(BIG_MULTIPLIER, BIG_REFRESH_SPEED) {
             @Override
             protected void drawThisShape(float left, float top, float right, float bottom,
                                          float currentAngle, Canvas canvas, Paint paint) {
@@ -97,11 +102,24 @@ public class ClockView extends View {
 
         // Draw the background
         canvas.drawColor(backgroundColor);
-        mSmallHand.draw(canvas, 90f);
-        mBigHand.draw(canvas, 135f);
-
+        int ticksPerSecond = 1;
+        if (getTicker() != null) {
+            ticksPerSecond = getTicker().getTicksPerSecond();
+        }
+        mSmallHand.draw(canvas, ticksPerSecond);
+        mBigHand.draw(canvas, ticksPerSecond);
 
         // Invalidate the view to immediately redraw
         invalidate();
     }
+
+    public void updateView() {
+        invalidate();
+    }
+
+    public void setTicker(Ticker ticker) {
+        this.mTicker = ticker;
+    }
+
+    public Ticker getTicker() { return this.mTicker; }
 }
