@@ -23,7 +23,6 @@ public class ClockView extends View {
 
     private final ClockHand mSmallHand;
     private final ClockHand mBigHand;
-//    public ClockView(Context context) { super(context); }
 
     public ClockView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,7 +32,7 @@ public class ClockView extends View {
             protected void drawThisShape(float left, float top, float right, float bottom,
                                          float currentAngle, Canvas canvas, Paint paint) {
                 canvas.save();
-                canvas.rotate(90, ClockHand.sViewCenterX, ClockHand.sViewCenterY);
+                canvas.rotate(currentAngle, ClockHand.sViewCenterX, ClockHand.sViewCenterY);
                 canvas.drawRect(left, top, right, bottom, paint);
                 canvas.restore();
             }
