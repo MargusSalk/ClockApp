@@ -3,9 +3,6 @@ package com.margus.clockapp.visuals;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -102,12 +99,12 @@ public class ClockView extends View {
 
         // Draw the background
         canvas.drawColor(backgroundColor);
-        int ticksPerSecond = 1;
+        int secondsInMinute = 1;
         if (getTicker() != null) {
-            ticksPerSecond = getTicker().getTicksPerSecond();
+            secondsInMinute = getTicker().getSecondsInMinute();
         }
-        mSmallHand.draw(canvas, ticksPerSecond);
-        mBigHand.draw(canvas, ticksPerSecond);
+        mSmallHand.draw(canvas, secondsInMinute);
+        mBigHand.draw(canvas, secondsInMinute);
 
         // Invalidate the view to immediately redraw
         invalidate();

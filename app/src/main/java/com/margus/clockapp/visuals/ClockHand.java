@@ -55,8 +55,8 @@ abstract class ClockHand {
         drawThisShape(left, top, left + width, top + height, getCurrentAngle(), canvas, mPaint);
     }
 
-    private void calculateAngle(int ticksPerSecond) {
-        float newAngle = getCurrentAngle() + (mDegreesPerSecond / (float) ticksPerSecond);
+    private void calculateAngle(int secondsInMinute) {
+        float newAngle = getCurrentAngle() + (mDegreesPerSecond / (float) secondsInMinute);
         if (newAngle > 360f) newAngle -= 360f;
         setCurrentAngle(newAngle);
     }
